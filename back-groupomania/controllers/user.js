@@ -197,7 +197,7 @@ exports.modifyUser = async (req, res, next) => {
           if(!userdb){
             return res.status(400).json({message: "utilisateur introuvable"})
         };     
-        if(req.file){
+        if(userdb.avatar != null && req.file){
           const filename = userdb.avatar.split("/images/")[1];
                   fs.unlink(`images/${filename}`, (err) => {
                     if (err) {

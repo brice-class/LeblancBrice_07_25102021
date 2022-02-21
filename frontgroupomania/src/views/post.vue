@@ -332,9 +332,16 @@ export default{
       //LIKE UN POST
       like(){
         // console.log(this.likeDis.find(el => el.userId == this.userId))
+        let likeResult = 1
+
+        let superFind = this.likeDis.find(el => el.userId == this.userId)
+        console.log("super find = ",superFind)
+        if (superFind != null && superFind.likeVal == 1 ){
+           likeResult = 0
+        }
         const postLike = {
           postId : this.postUnique.id,
-          likeVal : 1
+          likeVal : likeResult
         }
         axios
         .post("http://localhost:3000/api/like",postLike,{
@@ -351,9 +358,17 @@ export default{
 
       //ENVOI 1 DISLIKE
       dislike(){
+        let likeResult = -1
+
+        let superFind = this.likeDis.find(el => el.userId == this.userId)
+        console.log("super find = ",superFind)
+
+        if (superFind != null && superFind.dislike == 1 ){
+           likeResult = 0
+        }
         const postDislike = {
           postId : this.postUnique.id,
-          likeVal : -1
+          likeVal : likeResult
         }
         axios
         .post("http://localhost:3000/api/like",postDislike,{
