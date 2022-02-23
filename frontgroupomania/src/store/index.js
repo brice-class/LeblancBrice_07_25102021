@@ -11,13 +11,20 @@ export default new Vuex.Store({
     changeNavBox(state,navBox){
       console.log(navBox);
       state.navBox = navBox;
-    }
+    },
+    disconnectChange(state,navBox){
+      console.log(navBox);
+      state.navBox = navBox;
+    },
   },
   actions: {
-    changeNavBox({commit}){
-      // this.navBox=false;
+    changeNavBox({commit}){ 
       commit('changeNavBox',false)
+    },
+    disconnectChange({commit}){
+      commit('disconnectChange',true)
     }
+
   },
   modules: {
   }

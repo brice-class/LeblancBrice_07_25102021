@@ -238,7 +238,7 @@ export default{
 
       //RECUPERATION DU POST
       getOnePost(){
-        console.log("\ncoucou\n")
+        
           axios
        .get(`http://localhost:3000/api/posts/${this.id}`, {
             headers : {
@@ -333,7 +333,7 @@ export default{
       like(){
         // console.log(this.likeDis.find(el => el.userId == this.userId))
         let likeResult = 1
-
+        console.log("likeDis",this.likeDis)
         let superFind = this.likeDis.find(el => el.userId == this.userId)
         console.log("super find = ",superFind)
         if (superFind != null && superFind.likeVal == 1 ){

@@ -224,6 +224,10 @@ import moment from "moment";
       tokenVal : sessionStorage.getItem("userLog"), 
       userId : sessionStorage.getItem("id"),
       modifyId : 0,
+      postUnique:[],
+      likeDis:[],
+      
+      
        //like et dislike//
       
       // MODAL     
@@ -383,9 +387,19 @@ import moment from "moment";
 
       //ENVOI 1 LIKE
         like(articleId){
+       let likeResult= 1;
+       let postUnique = this.articles.find(el => el.id == articleId)
+       console.log("récupération de post = ",postUnique)
+       let likeDis = postUnique.likeDislikes
+       console.log("recup la table likedislike",likeDis)
+       let theLikeDis = likeDis.find(el => el.userId == this.userId)
+       console.log("recup du vrai likeDis",theLikeDis)
+      if (theLikeDis != null && theLikeDis.likeVal == 1 ){
+           likeResult = 0
+        }
         const postLike = {
-          postId : articleId,
-          likeVal : 1
+          postId : postUnique.id,
+          likeVal : likeResult
         }
         axios
         .post("http://localhost:3000/api/like",postLike,{
@@ -402,9 +416,20 @@ import moment from "moment";
 
       //ENVOI 1 DISLIKE
       dislike(articleId){
+        let likeResult = -1
+        let postUnique = this.articles.find(el => el.id == articleId)
+         console.log("récupération de post = ",postUnique)
+       let likeDis = postUnique.likeDislikes
+       console.log("recup la table likedislike",likeDis)
+       let theLikeDis = likeDis.find(el => el.userId == this.userId)
+       console.log("recup du vrai likeDis",theLikeDis)
+       if (theLikeDis != null && theLikeDis.dislike == 1 ){
+           likeResult = 0
+        }
+
         const postDislike = {
           postId : articleId,
-          likeVal : -1
+          likeVal : likeResult
         }
         axios
         .post("http://localhost:3000/api/like",postDislike,{

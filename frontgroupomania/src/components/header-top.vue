@@ -7,13 +7,7 @@
                 <li ><router-link  to="/Signup">S'inscrire</router-link></li>
                 <li><router-link to="/login">Se connecter</router-link></li>                
             </ul>
-        </nav>
-        <!-- <nav v-if="navBox == false">
-            <ul>
-                <li> <router-link to="/posts"> Posts </router-link></li>
-                <li> </li>
-            </ul>
-        </nav> -->
+        </nav>     
         <v-menu offset-y v-if="navBox == false">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -26,56 +20,43 @@
                 </v-btn>
             </template>
             <v-list>
-            <v-list-item> <router-link to="/posts"> Posts </router-link> </v-list-item>
-            <v-list-item > <router-link to="/profile"> Mon profile  </router-link></v-list-item>
-            <v-list-item > <router-link to="/createPost"> Créé un nouveau post</router-link></v-list-item>
-            
-            </v-list>
-        
-    </v-menu>
+                <v-list-item> <router-link to="/posts"> Posts </router-link> </v-list-item>
+                <v-list-item > <router-link to="/profile"> Mon profile  </router-link></v-list-item>
+                <v-list-item > <router-link to="/createPost"> Créé un nouveau post</router-link></v-list-item>
+                <v-list-item @click="disconnect"> <router-link to="/"> Se déconnecter </router-link> </v-list-item>
+            </v-list>      
+        </v-menu>
     </header>
 </template>
-
 <script>
-//  import {bus} from '../main'
-
 export default {
-   
-
     data(){
-        return{
-            
+        return{        
             username : sessionStorage.getItem("username"),
-            mail : sessionStorage.getItem("mail"),
-            
+            mail : sessionStorage.getItem("mail"),           
         }
-    },
-    
+    }, 
     methods:{
        navLog(){
            console.log(this.navBox)
-       }
-       
-    },
+       },
+       disconnect(){
+           if(confirm("Êtes-vous sur de vouloir vous déconnecter?")){
+               sessionStorage.clear(); 
+               this.$store.dispatch('disconnectChange')
+           }
+       }     
+    },    
     computed:{
-          navBox(){
-              return  this.$store.state.navBox
-          }  
-    },
-
-    
+        navBox(){
+            return  this.$store.state.navBox
+        }  
+    },  
     mounted()  {
-        // this.funcNav();
-        // bus.$on('changeNav',(data)=>{
-        //     this.navBox = data
-        // })
-        this.navLog();
-       
-        
+        this.navLog();     
     },
 }
 </script>
-
 <style scoped>
 header{
     display: flex;
@@ -105,7 +86,6 @@ button{
     }
 
 ul{
-
     display: flex;
     flex-wrap: nowrap;
     justify-content: flex-end;
@@ -116,9 +96,7 @@ li{
     list-style-type: none;
     font-size:x-large;
     margin: 0px 20px;
-    color : white;
-    
-    
+    color : white;   
 }
 a{
     outline: none;
